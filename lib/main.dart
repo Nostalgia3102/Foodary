@@ -41,6 +41,7 @@ class _MyAppState extends State<MyApp> {
       providers: providers,
       child: MaterialApp(
         title: StringsAsset.projectName,
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: AppColor.treeGreenLight),
           useMaterial3: true,

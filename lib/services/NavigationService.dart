@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodary/pages/home_page.dart';
 import 'package:foodary/pages/splash_screen.dart';
+import 'package:foodary/pages/welcome_screens.dart';
 
 class NavigationService{
   late GlobalKey<NavigatorState> _navigatorKey;
@@ -9,6 +10,7 @@ class NavigationService{
     // "/login" : (context) => const LoginPage(),
     // "/register" : (context) => const RegisterPage(),
     "/home_page" : (context) => const MyHomePage(),
+    "/welcome_page": (context) => const WelcomeScreenPage(),
     "/": (context) => const SplashScreen()
   };
 
