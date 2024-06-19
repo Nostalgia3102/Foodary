@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColor.lightGreen,
+        backgroundColor: AppColor.white,
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -39,14 +39,13 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Lottie.asset(
-                "assets/animations/loginAnim.json",
-
+                "assets/animations/loginAnimTwo.json",
                 width: 320,
                 height: 320,
               ),
-
             ],
           ),
+          const SizedBox(height: 70,),
           const Image(image: AssetImage("assets/images/canvaFoodary.png"))
         ]));
   }

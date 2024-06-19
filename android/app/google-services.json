@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "570648531036",
+    "project_id": "foodary-mobile-app",
+    "storage_bucket": "foodary-mobile-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570648531036:android:d3ef68696d25241e0d9699",
+        "android_client_info": {
+          "package_name": "com.example.foodary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDC4qJlI013PJTxZLYl7balM7i6n8M7UzI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

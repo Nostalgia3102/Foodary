@@ -18,7 +18,6 @@ class AppColor{
 
 class AppColorDarkTheme {
   AppColorDarkTheme._();
-
   ///TO DO:
 
 }
