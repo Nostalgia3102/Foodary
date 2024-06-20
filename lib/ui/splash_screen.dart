@@ -1,8 +1,8 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:foodary/constants/colors.dart';
 import 'package:lottie/lottie.dart';
+import '../utils/constants/colors.dart';
+import '../utils/utilities.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,11 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   startTimer() {
     var duration = const Duration(seconds: 3);
-    return Timer(duration, route);
-  }
-
-  route() {
-    Navigator.pushReplacementNamed(context, '/welcome_page');
+    return Timer(duration, (){navigationService.pushReplacementNamed("/welcome_page");});
   }
 
   @override

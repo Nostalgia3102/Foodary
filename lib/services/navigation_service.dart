@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:foodary/pages/home_page.dart';
-import 'package:foodary/pages/splash_screen.dart';
-import 'package:foodary/pages/welcome_screens.dart';
+import 'package:foodary/ui/sign_up_page.dart';
+
+import '../ui/home_page.dart';
+import '../ui/login_screen.dart';
+import '../ui/splash_screen.dart';
+import '../ui/welcome_screen.dart';
 
 class NavigationService{
   late GlobalKey<NavigatorState> _navigatorKey;
 
   final Map<String, Widget Function(BuildContext)> _routes = {
-    // "/login" : (context) => const LoginPage(),
-    // "/register" : (context) => const RegisterPage(),
+    "/login_page" : (context) => const LoginScreen(),
+    "/sign_up" : (context) => const SignUpScreen(),
     "/home_page" : (context) => const MyHomePage(),
     "/welcome_page": (context) => const WelcomeScreenPage(),
     "/": (context) => const SplashScreen()

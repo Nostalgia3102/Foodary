@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodary/constants/colors.dart';
-import 'package:foodary/constants/strings.dart';
-import 'package:foodary/viewmodels/home_page_view_model.dart';
 import 'package:provider/provider.dart';
+
+import '../data/viewmodels/home_page_view_model.dart';
+import '../utils/constants/colors.dart';
+import '../utils/constants/strings.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});

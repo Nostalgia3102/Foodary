@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodary/constants/colors.dart';
-import 'package:foodary/constants/strings.dart';
-import 'package:foodary/services/NavigationService.dart';
+import 'package:foodary/services/navigation_service.dart';
+import 'package:foodary/utils/constants/colors.dart';
+import 'package:foodary/utils/constants/strings.dart';
 import 'package:foodary/utils/utilities.dart';
-import 'package:foodary/viewmodels/home_page_view_model.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-
-final GetIt _getIt = GetIt.instance;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,23 +14,11 @@ Future<void> main() async {
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
-
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  // late AuthService _authService;
-  late NavigationService _navigationService;
-
-  @override
-  void initState() {
-    super.initState();
-    _navigationService = _getIt.get<NavigationService>();
-    // _authService = _getIt.get<AuthService>();
-  }
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -43,11 +27,11 @@ class _MyAppState extends State<MyApp> {
         title: StringsAsset.projectName,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: AppColor.treeGreenLight),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
           useMaterial3: true,
         ),
         initialRoute: '/',
-        navigatorKey: _navigationService.navigatorKey,
+        navigatorKey: navigationService.navigatorKey,
         routes: NavigationService().routes,
       ),
     );

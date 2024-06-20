@@ -8,13 +8,13 @@ Widget windowTile(BuildContext context, String image, String text){
         alignment: Alignment.center,
         decoration: BoxDecoration(
           border: Border.all(
-            color: Colors.orange,
+            color: Colors.deepOrange,
             width: 5.0,
           ),
           borderRadius: BorderRadius.circular(20),
         ),
-        height: MediaQuery.of(context).size.height * .60,
-        width: MediaQuery.of(context).size.width * .90,
+        height: MediaQuery.of(context).size.height * .50,
+        width: MediaQuery.of(context).size.width * .80,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(14),
           child: Image.asset(
