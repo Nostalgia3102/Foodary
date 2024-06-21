@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:foodary/data/viewmodels/login_screen_view_model.dart';
+import 'package:foodary/data/viewmodels/signup_screen_view_model.dart';
 import 'package:foodary/data/viewmodels/welcome_screen_view_model.dart';
 import 'package:foodary/firebase_options.dart';
 import 'package:foodary/services/navigation_service.dart';
@@ -19,6 +20,7 @@ final List<SingleChildWidget> providers = [
   ChangeNotifierProvider(create: (context) => HomePageViewModel()),
   ChangeNotifierProvider(create: (context) => WelcomeScreenViewModel()),
   ChangeNotifierProvider(create: (context) => LoginScreenViewModel()),
+  ChangeNotifierProvider(create: (context) => SignUpScreenViewModel()),
 ];
 
 Future<void> setUpFireBase() async {

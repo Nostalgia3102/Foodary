@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:foodary/data/viewmodels/signup_screen_view_model.dart';
+import 'package:foodary/services/navigation_service.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
+import '../utils/constants/strings.dart';
 import '../utils/constants/validations.dart';
 import '../utils/utilities.dart';
 
@@ -11,7 +16,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final GlobalKey<FormState> _registerFormKey = GlobalKey();
   String? name, email, password;
 
   @override
@@ -21,142 +25,280 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Consumer<SignUpScreenViewModel>(
+  builder: (context, provider, child) {
+  return Scaffold(
       resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        centerTitle: true,
+        title: Image.asset(
+          "assets/images/canvaFoodary.png",
+          fit: BoxFit.fill,
+          height: 64,
+          width: 200,
+        ),
+      ),
       body: SafeArea(
+        maintainBottomViewPadding: true,
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Let's Get Going!",
-                style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
-              ),
-              const Text("Register your account using the form below"),
-              const SizedBox(
-                height: 30,
-              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+              buildSignUpTitle(),
+              buildSignUpSubTitle(),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               Form(
-                key: _registerFormKey,
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                        radius: MediaQuery.of(context).size.width * 0.15),
-                    const SizedBox(height: 30),
-                    TextFormField(
-                      validator: (value) {
-                        if (value != null &&
-                            NAME_VALIDATION_REGEX.hasMatch(value)) {
-                          name = value;
-                          return null;
-                        }
-                        return "Enter valid name";
-                      },
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          hintText: "Name"),
-                    ),
-                    const SizedBox(height: 30),
-                    TextFormField(
-                      validator: (value) {
-                        if (value != null &&
-                            EMAIL_VALIDATION_REGEX.hasMatch(value)) {
-                          email = value;
-                          return null;
-                        }
-                        return "Enter valid email id";
-                      },
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          hintText: "Email"),
-                    ),
-                    const SizedBox(height: 30),
-                    TextFormField(
-                      obscureText: true,
-                      validator: (value) {
-                        if (value != null &&
-                            PASSWORD_VALIDATION_REGEX.hasMatch(value)) {
-                          password = value;
-                          return null;
-                        }
-                        return "Enter valid password";
-                      },
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          hintText: "Password"),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (_registerFormKey.currentState?.validate() ?? false) {
-                      _registerFormKey.currentState?.save();
-                      bool result =
-                      await authService.register(email!, password!);
-                      if (result) {
-                        if (name != null) {
-                          try{
-                            // await databaseServices.createUserProfile(
-                            //     userProfile: UserProfile(
-                            //         uid: authService.user!.uid, name: name));
-                            navigationService.pushReplacementNamed("/home_page");
-                          }catch(e){
-                            print("Unable to register the user");
-                            print(e);
-                          }
-                        }
-                      } else {
-                        final snackBar = SnackBar(
-                          content: const Text('Invalid Credentials'),
-                          duration: const Duration(seconds: 2),
-                          action: SnackBarAction(
-                            label: 'Undo',
-                            onPressed: () {
-                              // Some action to undo
-                            },
-                          ),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      }
-                    }
-                  },
-                  child: const Text("Register"),
-                ),
-              ),
-              Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                key: provider.signUpFormKey,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text("Already have an Account ?"),
-                      const SizedBox(
-                        width: 12,
+                      SizedBox(
+                      height: 60.0,
+                      child: buildTextFormField(
+                          provider,
+                          StringsAsset.enterName,
+                          StringsAsset.nameLabelText)),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                      SizedBox(
+                          height: 60.0,
+                          child: buildTextFormField(
+                              provider,
+                              StringsAsset.enterEmail,
+                              StringsAsset.emailLabelText)),
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                      SizedBox(
+                        height: 60,
+                        child: buildTextFormField(
+                            provider,
+                            StringsAsset.enterPassword,
+                            StringsAsset.passwordLabelText),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          navigationService.goBack();
-                        },
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                      )
+                      SizedBox(height: MediaQuery.of(context).size.height * 0.025),
                     ],
+                  ),
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: buildElevatedSignUpButton(provider, context),
+                ),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.06),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 100,
+                    height: 1,
+                    child: Container(
+                      color: Colors.black54,
+                    ),
+                  ),
+                  const Text(
+                    "  Continue with  ",
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                  SizedBox(
+                    width: 100,
+                    height: 1,
+                    child: Container(
+                      color: Colors.black54,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+              buildRowOtherSignUpOptions(context),
+              Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 14),
+                    child: buildRowFooterText(),
                   ))
             ],
           ),
         ),
       ),
     );
-  }
+  },
+);
+}
+
+Row buildRowFooterText() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      const Text(
+        "Have an Account ?",
+        style: TextStyle(fontWeight: FontWeight.w500, color: Colors.black54),
+      ),
+      const SizedBox(width: 12),
+      GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: const Text(
+          "Sign In",
+          style: TextStyle(
+              color: Colors.deepOrange, fontWeight: FontWeight.bold),
+        ),
+      )
+    ],
+  );
+}
+
+Row buildRowOtherSignUpOptions(BuildContext context) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      SizedBox(width: MediaQuery.of(context).size.height * 0.05),
+      IconButton(
+          icon: Image.asset(
+            'assets/images/fb.png',
+            width: MediaQuery.of(context).size.width * 0.08,
+          ),
+          onPressed: () {}),
+      SizedBox(width: MediaQuery.of(context).size.height * 0.01),
+      IconButton(
+          icon: Image.asset(
+            'assets/images/gogl.png',
+            width: MediaQuery.of(context).size.width * 0.14,
+          ),
+          onPressed: () {
+            GoogleSignIn().signIn();
+          }),
+      SizedBox(width: MediaQuery.of(context).size.height * 0.05),
+    ],
+  );
+}
+
+ElevatedButton buildElevatedSignUpButton(SignUpScreenViewModel provider, BuildContext context) {
+  return ElevatedButton(
+    style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(Colors.deepOrange),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+              side: BorderSide(color: Colors.deepOrange)),
+        )),
+    onPressed: () async {
+      if (provider.signUpFormKey.currentState?.validate() ?? false) {
+        provider.signUpFormKey.currentState?.save();
+        bool result =
+        await authService.register(provider.email!, provider.password!);
+        print(result);
+        if (result) {
+          navigationService.pushReplacementNamed("/home_page");
+        } else {
+          final snackBar = SnackBar(
+            content: const Text('Invalid Credentials'),
+            duration: const Duration(seconds: 2),
+            action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () {
+                // Some action to undo
+              },
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      }
+    },
+    child: const Padding(
+      padding: EdgeInsets.all(12),
+      child: Text(
+        "Register",
+        style: TextStyle(color: Colors.white),
+      ),
+    ),
+  );
+}
+
+TextFormField buildTextFormField(
+    SignUpScreenViewModel provider, String cautionText, String labelText) {
+  return TextFormField(
+      validator: (value) {
+
+        if (value != null &&
+            labelText == "Full Name" &&
+            EMAIL_VALIDATION_REGEX.hasMatch(value)) {
+          provider.name = value;
+          return null;
+        }
+
+        if (value != null &&
+            labelText == "Email" &&
+            EMAIL_VALIDATION_REGEX.hasMatch(value)) {
+          provider.email = value;
+          return null;
+        }
+        if (value != null &&
+            labelText == "Password" &&
+            PASSWORD_VALIDATION_REGEX.hasMatch(value)) {
+          provider.password = value;
+          return null;
+        }
+        return cautionText;
+      },
+      decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+          labelText: labelText,
+          fillColor: Colors.blue,
+          contentPadding:
+          const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+          errorStyle: const TextStyle(
+            color: Colors.red,
+            fontSize: 12,
+            height: 0.3,
+            fontWeight: FontWeight.normal,
+          ),
+          alignLabelWithHint: true,
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(
+              color: Colors.red,
+              width: 2,
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: Colors.redAccent,
+                width: 2,
+              ),
+              gapPadding: 0)));
+}
+
+Text buildSignUpSubTitle() {
+  return const Text(
+    "  Fill in your registration information",
+    style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500),
+  );
+}
+
+Row buildSignUpTitle() {
+  return const Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Text(
+        " Sign ",
+        style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
+      ),
+      Text(
+        "Up",
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 24,
+            color: Colors.deepOrange),
+      ),
+    ],
+  );
+}
 }

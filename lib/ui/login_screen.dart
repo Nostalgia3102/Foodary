@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodary/utils/constants/strings.dart';
 import 'package:provider/provider.dart';
 import '../data/viewmodels/login_screen_view_model.dart';
 import '../utils/constants/validations.dart';
@@ -32,40 +33,47 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 20),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                   buildLoginTitle(),
                   buildLoginSubTitle(),
-                  const SizedBox(height: 50),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.07),
                   Form(
                     key: provider.loginFormKey,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        // crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           SizedBox(
-                            height: 50,
-                            child: buildTextFormFieldEmail(provider),
-                          ),
-                          const SizedBox(height: 30),
+                              height: 60.0,
+                              child: buildTextFormField(
+                                  provider,
+                                  StringsAsset.enterEmail,
+                                  StringsAsset.emailLabelText)),
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                           SizedBox(
-                            height: 50,
-                            child: buildTextFormFieldPassword(provider),
+                            height: 60,
+                            child: buildTextFormField(
+                                provider,
+                                StringsAsset.enterPassword,
+                                StringsAsset.passwordLabelText),
                           ),
-                          const SizedBox(height: 20),
-                          const Text("Forgot your password ?",
-                              textAlign: TextAlign.end,
-                              style: TextStyle(
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: GestureDetector(
+                              onTap: (){},
+                              child: const Text("Forgot your password ?", style:TextStyle(
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.black54)),
+                                  color: Colors.black54),),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: SizedBox(
@@ -73,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: buildElevatedLoginButton(provider, context),
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 40),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.025),
                   buildRowOtherLoginOptions(context),
                   Expanded(
                       child: Padding(
@@ -120,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         const Text(
-          "Don't have an Account ?",
+          "Not a member ?",
           style: TextStyle(fontWeight: FontWeight.w500, color: Colors.black54),
         ),
         const SizedBox(width: 12),
@@ -142,20 +150,21 @@ class _LoginScreenState extends State<LoginScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        const SizedBox(width: 10),
+        SizedBox(width: MediaQuery.of(context).size.height * 0.05),
         IconButton(
             icon: Image.asset(
               'assets/images/fb.png',
               width: MediaQuery.of(context).size.width * 0.08,
             ),
             onPressed: () {}),
+        SizedBox(width: MediaQuery.of(context).size.height * 0.01),
         IconButton(
             icon: Image.asset(
               'assets/images/gogl.png',
               width: MediaQuery.of(context).size.width * 0.14,
             ),
             onPressed: () {}),
-        const SizedBox(width: 10),
+        SizedBox(width: MediaQuery.of(context).size.height * 0.05),
       ],
     );
   }
@@ -203,58 +212,51 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  TextFormField buildTextFormFieldPassword(LoginScreenViewModel provider) {
-    return TextFormField(
-      obscureText: true,
-      validator: (value) {
-        if (value != null && PASSWORD_VALIDATION_REGEX.hasMatch(value)) {
-          provider.password = value;
-          return null;
-        }
-        return "Enter valid password";
-      },
-      decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-          labelText: "Password"),
-    );
-  }
-
-  TextFormField buildTextFormFieldEmail(LoginScreenViewModel provider) {
+  TextFormField buildTextFormField(
+      LoginScreenViewModel provider, String cautionText, String labelText) {
     return TextFormField(
         validator: (value) {
-          if (value != null && EMAIL_VALIDATION_REGEX.hasMatch(value)) {
+          if (value != null &&
+              labelText == "Email" &&
+              EMAIL_VALIDATION_REGEX.hasMatch(value)) {
             provider.email = value;
             return null;
           }
-          return "Enter valid email id";
+          if (value != null &&
+              labelText == "Password" &&
+              PASSWORD_VALIDATION_REGEX.hasMatch(value)) {
+            provider.password = value;
+            return null;
+          }
+          return cautionText;
         },
         decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-            labelText: "Email",
+            labelText: labelText,
             fillColor: Colors.blue,
-            // contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 12),
-            // errorStyle: const TextStyle(
-            //   color: Colors.red,
-            //   fontSize: 14,
-            //   fontWeight: FontWeight.normal,
-            // ),
-            // alignLabelWithHint: true,
-            // errorBorder: OutlineInputBorder(
-            //   borderRadius: BorderRadius.circular(12),
-            //   borderSide: const BorderSide(
-            //     color: Colors.red,
-            //     width: 2,
-            //   ),
-            // ),
-            // focusedErrorBorder: OutlineInputBorder(
-            //   borderRadius: BorderRadius.circular(12),
-            //   borderSide: const BorderSide(
-            //     color: Colors.redAccent,
-            //     width: 2,
-            //   ),
-            // )
-    )
-    );
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+            errorStyle: const TextStyle(
+              color: Colors.red,
+              fontSize: 12,
+              height: 0.5,
+              fontWeight: FontWeight.normal,
+            ),
+            alignLabelWithHint: true,
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: Colors.red,
+                width: 2,
+              ),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(
+                  color: Colors.redAccent,
+                  width: 2,
+                ),
+                gapPadding: BorderSide.strokeAlignOutside)));
   }
 
   Text buildLoginSubTitle() {
