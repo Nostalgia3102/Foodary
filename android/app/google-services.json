@@ -12,7 +12,20 @@
           "package_name": "com.example.foodary"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "570648531036-pqqr9oeteq1qa3dklo2qmr8l1ots6nhg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodary",
+            "certificate_hash": "48afe601e065c5121cda425cdb6ea3f967d007b3"
+          }
+        },
+        {
+          "client_id": "570648531036-1l3ro1vo4jnludgi0snogdrk3bfkupjk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDC4qJlI013PJTxZLYl7balM7i6n8M7UzI"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570648531036-1l3ro1vo4jnludgi0snogdrk3bfkupjk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "570648531036-ofte9r9gb5feei4u1o3jblm2676fiv96.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.foodary"
+              }
+            }
+          ]
         }
       }
     }

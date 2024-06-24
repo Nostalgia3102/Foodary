@@ -4,7 +4,6 @@ import 'package:foodary/data/viewmodels/signup_screen_view_model.dart';
 import 'package:foodary/data/viewmodels/welcome_screen_view_model.dart';
 import 'package:foodary/firebase_options.dart';
 import 'package:foodary/services/navigation_service.dart';
-import 'package:foodary/ui/login_screen.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';

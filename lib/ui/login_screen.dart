@@ -5,6 +5,7 @@ import '../data/viewmodels/login_screen_view_model.dart';
 import '../utils/constants/validations.dart';
 import '../utils/utilities.dart';
 
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -156,14 +157,58 @@ class _LoginScreenState extends State<LoginScreen> {
               'assets/images/fb.png',
               width: MediaQuery.of(context).size.width * 0.08,
             ),
-            onPressed: () {}),
+            onPressed: () async{
+              try{
+                bool res = await authService.loginWithFacebook();
+                if(res){
+                  navigationService.pushReplacementNamed("/home_page");
+                }else{
+                  final snackBar = SnackBar(
+                    content: const Text('User does not exists, Please register - FB'),
+                    duration: const Duration(seconds: 2),
+                    action: SnackBarAction(
+                      label: 'Close',
+                      onPressed: () {
+                        // Some action to undo
+                      },
+                    ),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+              }catch(e){
+                print(e);
+              }
+            }),
         SizedBox(width: MediaQuery.of(context).size.height * 0.01),
         IconButton(
             icon: Image.asset(
               'assets/images/gogl.png',
               width: MediaQuery.of(context).size.width * 0.14,
             ),
-            onPressed: () {}),
+            onPressed: () async{
+              try{
+                bool result =
+                await authService.logInWithGoogle();
+                print(result);
+                if (result) {
+                  navigationService.pushReplacementNamed("/home_page");
+                } else {
+                  final snackBar = SnackBar(
+                    content: const Text('User does not exists, Please register - GM'),
+                    duration: const Duration(seconds: 2),
+                    action: SnackBarAction(
+                      label: 'Close',
+                      onPressed: () {
+                        // Some action to undo
+                      },
+                    ),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+              }catch(e){
+                debugPrint(e.toString());
+              }
+            }),
         SizedBox(width: MediaQuery.of(context).size.height * 0.05),
       ],
     );
@@ -173,8 +218,8 @@ class _LoginScreenState extends State<LoginScreen> {
       LoginScreenViewModel provider, BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.deepOrange),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          backgroundColor: WidgetStateProperty.all(Colors.deepOrange),
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12)),
                 side: BorderSide(color: Colors.deepOrange)),

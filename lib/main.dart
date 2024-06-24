@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foodary/services/navigation_service.dart';
-import 'package:foodary/utils/constants/colors.dart';
 import 'package:foodary/utils/constants/strings.dart';
 import 'package:foodary/utils/utilities.dart';
 import 'package:provider/provider.dart';

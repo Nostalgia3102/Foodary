@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foodary/data/viewmodels/signup_screen_view_model.dart';
-import 'package:foodary/services/navigation_service.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/constants/strings.dart';
@@ -115,7 +113,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.025),
-              buildRowOtherSignUpOptions(context),
+              buildRowOtherSignUpOptions(context, provider),
               Expanded(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(8, 8, 8, 14),
@@ -154,7 +152,7 @@ Row buildRowFooterText() {
   );
 }
 
-Row buildRowOtherSignUpOptions(BuildContext context) {
+Row buildRowOtherSignUpOptions(BuildContext context, SignUpScreenViewModel provider) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
@@ -164,15 +162,57 @@ Row buildRowOtherSignUpOptions(BuildContext context) {
             'assets/images/fb.png',
             width: MediaQuery.of(context).size.width * 0.08,
           ),
-          onPressed: () {}),
+          onPressed: () async{
+            try{
+              bool res = await authService.signUpWithFacebook();
+              if(res){
+                navigationService.pushReplacementNamed("/home_page");
+              }else{
+                final snackBar = SnackBar(
+                  content: const Text('User does not exists, Please register - FB'),
+                  duration: const Duration(seconds: 2),
+                  action: SnackBarAction(
+                    label: 'Close',
+                    onPressed: () {
+                      // Some action to undo
+                    },
+                  ),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+            }catch(e){
+              print(e);
+            }
+          }),
       SizedBox(width: MediaQuery.of(context).size.height * 0.01),
       IconButton(
           icon: Image.asset(
             'assets/images/gogl.png',
             width: MediaQuery.of(context).size.width * 0.14,
           ),
-          onPressed: () {
-            GoogleSignIn().signIn();
+          onPressed: () async {
+            try{
+                bool result =
+                await authService.signUpWithGoogle();
+                print(result);
+                if (result) {
+                  navigationService.pushReplacementNamed("/home_page");
+                } else {
+                  final snackBar = SnackBar(
+                    content: const Text('User Already Exists Please Login'),
+                    duration: const Duration(seconds: 2),
+                    action: SnackBarAction(
+                      label: 'Close',
+                      onPressed: () {
+                        // Some action to undo
+                      },
+                    ),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+            }catch(e){
+              debugPrint(e.toString());
+            }
           }),
       SizedBox(width: MediaQuery.of(context).size.height * 0.05),
     ],
@@ -182,8 +222,8 @@ Row buildRowOtherSignUpOptions(BuildContext context) {
 ElevatedButton buildElevatedSignUpButton(SignUpScreenViewModel provider, BuildContext context) {
   return ElevatedButton(
     style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(Colors.deepOrange),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        backgroundColor: WidgetStateProperty.all(Colors.deepOrange),
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(12)),
               side: BorderSide(color: Colors.deepOrange)),

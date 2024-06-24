@@ -64,6 +64,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '570648531036',
     projectId: 'foodary-mobile-app',
     storageBucket: 'foodary-mobile-app.appspot.com',
+    androidClientId: '570648531036-pqqr9oeteq1qa3dklo2qmr8l1ots6nhg.apps.googleusercontent.com',
+    iosClientId: '570648531036-ofte9r9gb5feei4u1o3jblm2676fiv96.apps.googleusercontent.com',
     iosBundleId: 'com.example.foodary',
   );
 
@@ -73,6 +75,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '570648531036',
     projectId: 'foodary-mobile-app',
     storageBucket: 'foodary-mobile-app.appspot.com',
+    androidClientId: '570648531036-pqqr9oeteq1qa3dklo2qmr8l1ots6nhg.apps.googleusercontent.com',
+    iosClientId: '570648531036-ofte9r9gb5feei4u1o3jblm2676fiv96.apps.googleusercontent.com',
     iosBundleId: 'com.example.foodary',
   );
 
@@ -85,4 +89,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'foodary-mobile-app.appspot.com',
     measurementId: 'G-XXLHTTW80P',
   );
+
 }
