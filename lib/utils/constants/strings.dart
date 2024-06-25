@@ -11,4 +11,6 @@ class StringsAsset {
   static const String passwordLabelText = "Password";
   static const String enterName = "Enter a valid name";
   static const String nameLabelText = "Full name";
+  static const String enterPhoneNumber = "Enter a valid phone number";
+  static const String phoneNumberLabelText = "Phone Number";
 }
