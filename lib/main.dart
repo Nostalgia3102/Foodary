@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
           useMaterial3: true,
         ),
-        initialRoute: '/',
+        initialRoute:"/",
         navigatorKey: navigationService.navigatorKey,
         routes: NavigationService().routes,
       ),

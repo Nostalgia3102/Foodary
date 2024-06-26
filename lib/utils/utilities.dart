@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:foodary/data/viewmodels/login_screen_view_model.dart';
 import 'package:foodary/data/viewmodels/signup_screen_view_model.dart';
 import 'package:foodary/data/viewmodels/welcome_screen_view_model.dart';
 import 'package:foodary/firebase_options.dart';
+import 'package:foodary/services/database_service.dart';
 import 'package:foodary/services/navigation_service.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -11,10 +14,19 @@ import 'package:provider/single_child_widget.dart';
 import '../data/viewmodels/home_page_view_model.dart';
 import '../services/auth_service.dart';
 
+
+///Instance Registrations
 final GetIt getIt = GetIt.instance;
+final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+
+///Services instances
 NavigationService navigationService = getIt.get<NavigationService>();
 AuthService authService = getIt.get<AuthService>();
+DatabaseServices databaseServices = getIt.get<DatabaseServices>();
 
+
+///ChangeNotifierProvider Registrations
 final List<SingleChildWidget> providers = [
   ChangeNotifierProvider(create: (context) => HomePageViewModel()),
   ChangeNotifierProvider(create: (context) => WelcomeScreenViewModel()),
@@ -22,18 +34,20 @@ final List<SingleChildWidget> providers = [
   ChangeNotifierProvider(create: (context) => SignUpScreenViewModel()),
 ];
 
+
+///Firebase Setup
 Future<void> setUpFireBase() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 }
 
-Future<void> registerServices() async {
-  print("utils --> ${getIt.hashCode}");
 
+///Service Registrations
+Future<void> registerServices() async {
   getIt.registerSingleton<AuthService>(AuthService());
   getIt.registerSingleton<NavigationService>(NavigationService());
-  // _getIt.registerSingleton<DatabaseServices>(DatabaseServices());
+  getIt.registerSingleton<DatabaseServices>(DatabaseServices());
 
-  print("Services Registered");
+  debugPrint("Services Registered");
 }

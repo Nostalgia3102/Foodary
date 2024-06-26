@@ -20,17 +20,20 @@ class _SplashScreenState extends State<SplashScreen> {
 
   startTimer() {
     var duration = const Duration(seconds: 3);
-    return Timer(duration, (){navigationService.pushReplacementNamed("/welcome_page");});
+    return Timer(duration, () {
+      navigationService.pushReplacementNamed(
+          authService.user != null ? "/home_page" : "/welcome_page");
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColor.white,
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height:70,),
+        body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          const SizedBox(
+            height: 70,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -41,7 +44,9 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 70,),
+          const SizedBox(
+            height: 70,
+          ),
           const Image(image: AssetImage("assets/images/canvaFoodary.png"))
         ]));
   }

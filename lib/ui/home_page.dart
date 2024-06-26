@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodary/utils/utilities.dart';
 import 'package:provider/provider.dart';
 
 import '../data/viewmodels/home_page_view_model.dart';
@@ -32,6 +33,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         offset: Offset(2.0, 2.0))
                   ]),
             ),
+            actions: [IconButton(onPressed: ()async{
+              try{
+                bool result = await authService.logout();
+                if (result) {
+                  navigationService.pushReplacementNamed("/login_page");
+                }
+              }catch(e){
+                print(e);
+              }
+            }, icon: const Icon(Icons.logout, color: Colors.white,))],
           ),
           body: Center(
             child: Column(
