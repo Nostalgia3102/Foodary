@@ -49,6 +49,7 @@ dependencies:
   flutter_facebook_auth: ^7.0.1
   intl_phone_number_input: ^0.7.3+1
   location: ^6.0.2
+  easy_sidemenu: ^0.6.0
 
 flutter_icons:
   android: true
@@ -81,6 +82,7 @@ flutter:
   assets:
     - assets/images/
     - assets/animations/
+    - shorebird.yaml
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

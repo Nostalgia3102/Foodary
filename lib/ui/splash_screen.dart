@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
         backgroundColor: AppColor.white,
         body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           const SizedBox(
-            height: 70,
+            height: 60,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

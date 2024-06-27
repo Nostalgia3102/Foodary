@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:foodary/ui/foodary_page.dart';
+import 'package:foodary/ui/grocery_page.dart';
+import 'package:foodary/ui/reorder_page.dart';
+import 'package:foodary/ui/tiffin_service_page.dart';
 import 'package:foodary/utils/utilities.dart';
 import 'package:provider/provider.dart';
 
 import '../data/viewmodels/home_page_view_model.dart';
-import '../utils/constants/colors.dart';
-import '../utils/constants/strings.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -14,58 +17,112 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+
   @override
   Widget build(BuildContext context) {
     return Consumer<HomePageViewModel>(
       builder: (context, provider, child) {
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-            title: const Text(
-              StringsAsset.projectName,
-              style: TextStyle(
-                  color: AppColor.orange,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                        color: Colors.black,
-                        blurRadius: 1.0,
-                        offset: Offset(2.0, 2.0))
-                  ]),
-            ),
-            actions: [IconButton(onPressed: ()async{
-              try{
-                bool result = await authService.logout();
-                if (result) {
-                  navigationService.pushReplacementNamed("/login_page");
-                }
-              }catch(e){
-                print(e);
-              }
-            }, icon: const Icon(Icons.logout, color: Colors.white,))],
+            systemOverlayStyle: const SystemUiOverlayStyle(
+            systemNavigationBarColor: Colors.black, // Navigation bar
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.dark,
+            systemNavigationBarContrastEnforced: true),// Status bar
+            backgroundColor: Colors.transparent,
+           leadingWidth: MediaQuery.of(context).size.width * 0.7,
+           leading: const Padding(
+             padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+             child: Column(
+               mainAxisAlignment: MainAxisAlignment.start,
+               children: [
+                 Row(
+                   children: [
+                     Icon(Icons.double_arrow_rounded, color: Colors.deepOrange, ),
+                     Text("Office", style: TextStyle(
+                       color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18
+                     ),),
+                     Icon(Icons.keyboard_arrow_down_rounded, color: Colors.black,),
+                   ],
+                 ),
+                 Text("Ground Floor, Sector 67, Sahibza..."),
+               ],
+             ),
+           ),
+            actions: [
+              IconButton(
+                  onPressed: (){},
+                  icon: const Icon(
+                    size: 20,
+                    Icons.shopping_cart_outlined,
+                    color: Colors.black,
+                  )),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0,0,14,0),
+                child: IconButton(
+                    onPressed: () async {
+                      try {
+                        bool result = await authService.logout();
+                        if (result) {
+                          navigationService.pushReplacementNamed("/login_page");
+                        }
+                      } catch (e) {
+                        print(e);
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.person_2_rounded,
+                      color: Colors.black,
+                    )),
+              )
+            ],
           ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text("Hello World!"),
-                const Text(
-                  'You have pushed the button this many times:',
-                ),
-                Text(
-                  provider.numbers.length.toString(),
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-              ],
-            ),
+          body:IndexedStack(
+            index: provider.selectedIndex,
+            children: const [
+              FoodaryPage(),
+              TiffinServicePage(),
+              GroceryPage(),
+              ReorderPage()
+            ],
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              provider.add();
-            },
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          ), // This trailing comma makes auto-formatting nicer for build methods.
+          bottomNavigationBar: BottomNavigationBar(
+            unselectedItemColor: Colors.grey,
+            showUnselectedLabels: true,
+            showSelectedLabels: true,
+            selectedIconTheme: const IconThemeData(
+              color: Colors.deepOrange
+            ),
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.fastfood),
+                label: 'Foodary',
+                tooltip: "Foodary Icon",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.ac_unit),
+                label: 'Tiffin-Service',
+                tooltip: "Tiffin-Service Icon"
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.local_grocery_store),
+                label: 'Grocery',
+                  tooltip: "Grocery Icon"
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.shopping_bag),
+                label: 'Reorder',
+                  tooltip: "Reorder Icon"
+              ),
+            ],
+            currentIndex: provider.selectedIndex,
+            selectedItemColor: Colors.deepOrange,
+            onTap:  (index) =>
+              setState(() {
+                provider.selectedIndex = index;
+              }),
+          ),
         );
       },
     );

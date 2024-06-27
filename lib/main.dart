@@ -36,3 +36,8 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+
+//Installed Shorebird for no update code changes
+//using Sliver App Bar for dynamic App bar
+//using Shimmer for the loading effect

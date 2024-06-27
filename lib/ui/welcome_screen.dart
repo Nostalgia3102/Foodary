@@ -41,8 +41,8 @@ class _WelcomeScreenPageState extends State<WelcomeScreenPage> {
     return ElevatedButton(
       style: ButtonStyle(
           backgroundColor:
-          MaterialStateProperty.all(Colors.deepOrange),
-          shape: MaterialStateProperty.all<
+          WidgetStateProperty.all(Colors.deepOrange),
+          shape: WidgetStateProperty.all<
               RoundedRectangleBorder>(
             const RoundedRectangleBorder(
                 borderRadius:

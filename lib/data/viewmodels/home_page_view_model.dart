@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class HomePageViewModel extends ChangeNotifier{
-  final List<int> numbers = [0];
-  void add(){
-    int last  = numbers.last;
-    numbers.add(last+1);
+  int _selectedIndex = 0;
+  int get selectedIndex => _selectedIndex;
+  set selectedIndex(int value){
+    _selectedIndex = value;
     notifyListeners();
   }
 }
