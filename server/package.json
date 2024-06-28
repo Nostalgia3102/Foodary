@@ -1,0 +1,27 @@
+{
+  "name": "foodary-server",
+  "version": "1.0.0",
+  "description": "local server for foodary mobile app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nostalgia3102/Foodary.git"
+  },
+  "author": "Sourin Manna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nostalgia3102/Foodary/issues"
+  },
+  "homepage": "https://github.com/Nostalgia3102/Foodary#readme",
+  "dependencies": {
+    "http": "^0.0.1-security",
+    "express": "^4.19.2",
+    "firebase": "^10.12.2",
+    "firebase-admin": "^12.2.0",
+    "nodemon": "^3.1.4"
+  }
+}

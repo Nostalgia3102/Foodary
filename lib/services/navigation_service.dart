@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foodary/ui/sign_up_page.dart';
+import 'package:foodary/ui/signIn&LogIn/sign_up_page.dart';
 
 import '../ui/home_page.dart';
-import '../ui/login_screen.dart';
+import '../ui/signIn&LogIn/login_screen.dart';
 import '../ui/splash_screen.dart';
 import '../ui/welcome_screen.dart';
 

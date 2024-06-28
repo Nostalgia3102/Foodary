@@ -1,10 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:foodary/ui/foodary_page.dart';
-import 'package:foodary/ui/grocery_page.dart';
-import 'package:foodary/ui/reorder_page.dart';
-import 'package:foodary/ui/tiffin_service_page.dart';
+import 'package:foodary/ui/fragments/foodary_page.dart';
+import 'package:foodary/ui/fragments/grocery_page.dart';
+import 'package:foodary/ui/fragments/reorder_page.dart';
+import 'package:foodary/ui/fragments/tiffin_service_page.dart';
 import 'package:foodary/utils/utilities.dart';
+import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
 import '../data/viewmodels/home_page_view_model.dart';
@@ -17,6 +19,53 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  final locationController = Location();
+
+  Future<void> fetchLocationUpdates() async {
+
+    debugPrint("Inside the Location Function");
+
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+
+    serviceEnabled = await locationController.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await locationController.requestService();
+      if (!serviceEnabled) {
+        return;
+      }
+    }
+
+    permissionGranted = await locationController.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await locationController.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    final currentLocation = await locationController.getLocation();
+
+    debugPrint("LOCATION");
+
+    debugPrint(currentLocation.toString());
+
+    // if (currentLocation.latitude != null && currentLocation.longitude != null) {
+    //   setState(() {
+    //     currentPosition = LatLng(
+    //       currentLocation.latitude!,
+    //       currentLocation.longitude!,
+    //     );
+    //   });
+    }
+
+    @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchLocationUpdates();
+  }
 
 
   @override
@@ -32,21 +81,26 @@ class _MyHomePageState extends State<MyHomePage> {
             systemNavigationBarContrastEnforced: true),// Status bar
             backgroundColor: Colors.transparent,
            leadingWidth: MediaQuery.of(context).size.width * 0.7,
-           leading: const Padding(
-             padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+           leading: Padding(
+             padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
              child: Column(
                mainAxisAlignment: MainAxisAlignment.start,
                children: [
-                 Row(
-                   children: [
-                     Icon(Icons.double_arrow_rounded, color: Colors.deepOrange, ),
-                     Text("Office", style: TextStyle(
-                       color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18
-                     ),),
-                     Icon(Icons.keyboard_arrow_down_rounded, color: Colors.black,),
-                   ],
+                 GestureDetector(
+                   onTap: (){
+                     fetchLocationUpdates();
+                   },
+                   child: const Row(
+                     children: [
+                       Icon(Icons.double_arrow_rounded, color: Colors.deepOrange, ),
+                       Text("Office", style: TextStyle(
+                         color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18
+                       ),),
+                       Icon(Icons.keyboard_arrow_down_rounded, color: Colors.black,),
+                     ],
+                   ),
                  ),
-                 Text("Ground Floor, Sector 67, Sahibza..."),
+                 const Text("Ground Floor, Sector 67, Sahibza..."),
                ],
              ),
            ),

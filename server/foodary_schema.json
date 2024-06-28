@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "foodary-mobile-app",
+  "private_key_id": "5aa239701b1de00825e7614929cde9b628bd4b88",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC8cnUZJg3EoEu/\n77DvFAYL6/M8Y9RQghgiSvIRKllQCjWub8UympJupJ58TZzUzJZIRrsIEKJpIiGG\nj7BxkWtWfVALSDg5CGrWgXlksBTSSFX3uN0+kDgRqc3OVBq7TQzoasgBH2FHmnfu\nAHtclRzGVOWUIdIH4Oqrn50bJku3D0asRzmdGirKw78WVv4tB84RwepzRhQFu/EV\nAejes8tqqIViCJyWc/aRc0+NSvJBkFamB1BSQ43eXxuYEW3H6w+Un8s04sLkp/hP\nJZ6jORgcoBfpSB/iors5rgkjrF9bzgrc5uXxFJuUukK2QIOhUrwlG4yLeODop77N\ncF6OkiENAgMBAAECggEAI1Dn9RCWn/TSfWP0Krn78BwF95lV3siisTqOZv0iw8dG\nDCzSLgudybJ8KRt6er7koyLuRjKn3UASPF+NV5tDHHBboeGk97tGGnElSONe45G+\n2rAAdoscluLVuQc2A0gLVTs9xEgXOQ4Pz8CzXcRsIhci90HnVKaoFAXTsZTZt7KI\nwpys/UaLVzjBHHPqOeB1mCrV/mxMRNshOXnYsOEfU9QMgdkc7oHk7mOVBuK+VdNm\n/nNhxTfN1ZYsd9cL46I6S8SAoQJ8T4HMCQbxR4TTeGL818UwQpwsgcEK6WDpvS55\nNQZJgObfxOUk2YXv/TIVu8CIHEbDVAnoF8OmSSD/WQKBgQDnTQXHoj8pJAqIeHHY\nqfa3CLHVOR48S+BBBcNZDmlXrQp39lY0E9yRnxDAcRO3U9spTUQ9QBE6UA4zfE+c\nbpCb+kCxe8bvGYgSL9hpOC4JFtSSw9swhtsRW0q3YMMxolG1QkliexlifQshsJ28\nHNss/1b1p0iAjZUniKx3ZPTSfwKBgQDQkfV1RjGT2j8llVPvvXS7pPab2Zo3qlz1\nH1AxIJV8BD+Ke+EfhijEx4UhNqZs+5hQCIxgY1QSKWQ/kUhuSVfTpmcDQ5HbgXYe\nAeRRVr1KsXPeTIb9HpMH/989s32E+TiAYqPhcLiNLhe6H+Hcq7wSwcFXN+uEhfwJ\nFL9GUVtucwKBgFPpvY8PbZqfWLLp/2N7ReZhYSLZ9f4qCNGOJbDJaa5FOOcMl3mN\nOxgZfRpT67M22OvC/F68P4PIR16mWruF4TC1OYMqRKG5wYPXl8uUdh8WCUi1hW+1\nfQRu+kxM7oOzP7Fiuvzfa/YvJzqxuIfmcB2DBSlZ5xO8ScBt9SPbnHZBAoGBALaw\nst1nf7OvfpJwC5a6T46xf2WiJChQLJ51MCvoC6gWnIWz3sxbGkjLLzyZfwuFEbRA\n2JzxREmoQexAWL5ptelpH2BHhnJMIudD5vasUKAlcYWtaKw8ZLOkF6oXF4IrPqeO\nP1gQAUeAsT3SAWfmcZXIa473J2/sYIifyK9SQhErAoGBANUJp4b4SuALvckkfUja\nVDGJ1k9jY630nnOB8A2PbsNe24A5NwxDM5bE1wH24wJpN1urbrZSoiY8Rt9qL4K+\nsZo8WJVTHjkdI5YD2EzSXcrjd+3OkeNT9vdZjoT3UfPzslLHgrb31Y3CYGUgXYXn\ngBrRV1MbsL/aqs/wBhAh+4Jv\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-4it7g@foodary-mobile-app.iam.gserviceaccount.com",
+  "client_id": "104701511181075868489",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-4it7g%40foodary-mobile-app.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
