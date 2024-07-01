@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HomePageViewModel extends ChangeNotifier{
-  int _selectedIndex = 0;
-  int get selectedIndex => _selectedIndex;
-  set selectedIndex(int value){
-    _selectedIndex = value;
-    notifyListeners();
-  }
+class RestaurantPageViewModel extends ChangeNotifier{
 
   int _numberOfListOfRestaurants = 0;
   int get numberOfListOfRestaurants => _numberOfListOfRestaurants;
@@ -14,4 +8,5 @@ class HomePageViewModel extends ChangeNotifier{
     _numberOfListOfRestaurants = value;
     notifyListeners();
   }
+
 }

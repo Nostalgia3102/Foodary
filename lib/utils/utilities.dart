@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:foodary/data/viewmodels/login_screen_view_model.dart';
+import 'package:foodary/data/viewmodels/restaurant_page_view_model.dart';
 import 'package:foodary/data/viewmodels/signup_screen_view_model.dart';
 import 'package:foodary/data/viewmodels/welcome_screen_view_model.dart';
 import 'package:foodary/firebase_options.dart';
@@ -28,6 +29,7 @@ DatabaseServices databaseServices = getIt.get<DatabaseServices>();
 
 ///ChangeNotifierProvider Registrations
 final List<SingleChildWidget> providers = [
+  ChangeNotifierProvider(create: (context) => RestaurantPageViewModel()),
   ChangeNotifierProvider(create: (context) => HomePageViewModel()),
   ChangeNotifierProvider(create: (context) => WelcomeScreenViewModel()),
   ChangeNotifierProvider(create: (context) => LoginScreenViewModel()),

@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:foodary/ui/restaurantPage.dart';
+import 'package:foodary/utils/utilities.dart';
 
 class FoodaryPage extends StatefulWidget {
   const FoodaryPage({super.key});
@@ -125,24 +127,29 @@ class _FoodaryPageState extends State<FoodaryPage> {
                   child: GridView.builder(
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2),
-                    itemBuilder: (_, index) => Container(
-                      // padding: const EdgeInsets.all(8.0),
-                      margin: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(image: NetworkImage(bannerList[index])),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            offset: const Offset(0.0, 1.0), //(x,y)
-                            blurRadius: 6.0,// blur radius
-                          )
-                        ]
+                    itemBuilder: (_, index) => GestureDetector(
+                      onTap: (){
+                        cardClicked(index);
+                      },
+                      child: Container(
+                        // padding: const EdgeInsets.all(8.0),
+                        margin: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(image: NetworkImage(bannerList[index])),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              offset: const Offset(0.0, 1.0), //(x,y)
+                              blurRadius: 6.0,// blur radius
+                            )
+                          ]
+                        ),
+                        // child: Image.network(
+                        //   bannerList[index],
+                        //   fit: BoxFit.cover,
+                        // ),
                       ),
-                      // child: Image.network(
-                      //   bannerList[index],
-                      //   fit: BoxFit.cover,
-                      // ),
                     ),
                     itemCount: 4,
                   ),
@@ -158,5 +165,13 @@ class _FoodaryPageState extends State<FoodaryPage> {
                 )
               ],
             )));
+  }
+
+  ///Types : restaurant - 0, grocery - 1, tiffin - 2
+  cardClicked(int index) {
+    ///Food Delivery functionality :
+    if(index == 0){
+      navigationService.push(MaterialPageRoute(builder: (context) => const RestaurantPage(),));
+    }
   }
 }
