@@ -62,18 +62,20 @@ class _RestaurantPersonalPageState extends State<RestaurantPersonalPage> {
     restaurantPersonalPageViewModel.listOfItems = menuList;
   }
 
-  bool visitingFirstTime = true;
+
 
   @override
   Widget build(BuildContext context) {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
-    if (visitingFirstTime) {
-      visitingFirstTime = !visitingFirstTime;
-      fetchData(context);
-    }
+
     return Consumer<RestaurantPersonalPageViewModel>(
       builder: (context, provider, child) {
+        if (provider.visitingFirstTime) {
+          print("mai run hua - visitingfirsttime");
+          provider.visitingFirstTime = !provider.visitingFirstTime;
+          fetchData(context);
+        }
         return Scaffold(
           appBar: AppBar(
             actions: [

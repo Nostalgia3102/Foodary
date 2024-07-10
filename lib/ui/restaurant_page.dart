@@ -51,21 +51,48 @@ class RestaurantPage extends StatelessWidget {
                     itemCount: provider.numberOfListOfRestaurants,
                     itemBuilder: (context, index) {
                       DocumentSnapshot document = snapshot.data![index];
-                      return ListTile(
-                        style: ListTileStyle.drawer,
-                        onTap: (){
-                          Navigator.pushNamed(context, "/restaurant_personal_page",arguments: {"name" :
-                          document['name'], "description": document['description'], "vendorId" : document['vendorId']});
-                        },
-                        titleAlignment: ListTileTitleAlignment.titleHeight,
-                        enabled: true,
-                        minTileHeight: MediaQuery.of(context).size.height * .15,
-                        contentPadding: const EdgeInsets.all(8.0),
-                        leading: Image.network(document['image'], height: 60, width: 60, fit: BoxFit.fill,),
-                        title: Text(document['name']),
-                        subtitle: Text(
-                          document['description'],
-                          maxLines: 2,
+                      return Card(
+                        elevation: 3,
+                        child: ListTile(
+                          style: ListTileStyle.drawer,
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, "/restaurant_personal_page",
+                                arguments: {
+                                  "name": document['name'],
+                                  "description": document['description'],
+                                  "vendorId": document['vendorId']
+                                });
+                          },
+                          titleAlignment: ListTileTitleAlignment.titleHeight,
+                          enabled: true,
+                          minTileHeight:
+                              MediaQuery.of(context).size.height * .13,
+                          leading: Card(
+                            elevation: 2,
+                            child: Container(
+                              padding: const EdgeInsets.fromLTRB(0, 100, 0, 0),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(document['image']),
+                                      fit: BoxFit.fill),
+                                  borderRadius: BorderRadius.circular(10)),
+                              height: 60,
+                              width: 60,
+                            ),
+                          ),
+                          title: Text(document['name'], style: const TextStyle(fontWeight: FontWeight.bold),),
+                          subtitle: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
+                            child: Text(
+                              document['description'],
+                              maxLines: 2,
+                              style: const TextStyle(
+                                color: Colors.black
+                              ),
+                            ),
+                          ),
                         ),
                       );
                     });
