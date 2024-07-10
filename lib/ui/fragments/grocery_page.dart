@@ -10,6 +10,6 @@ class GroceryPage extends StatefulWidget {
 class _GroceryPageState extends State<GroceryPage> {
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(child: Center(child: Text("Screen 3")));
+    return const SafeArea(child: Center(child: Text("Coming Soon - Screen 3")));
   }
 }

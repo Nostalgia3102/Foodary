@@ -10,6 +10,6 @@ class ReorderPage extends StatefulWidget {
 class _ReorderPageState extends State<ReorderPage> {
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(child: Center(child: Text("Screen 4")));
+    return const SafeArea(child: Center(child: Text("Coming Soon - Screen 4")));
   }
 }

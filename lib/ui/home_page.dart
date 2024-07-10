@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:foodary/data/viewmodels/restaurant_page_view_model.dart';
+import 'package:foodary/utils/constants/strings.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -53,8 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
     debugPrint(currentLocation.toString());
 
     try {
-      var url = Uri.http(
-          '192.168.72.1:5050', '/api/sending_location', {'q': '{http}'});
+      ///for local host use Uri.http and for ngrok use Uri.https
+      var url = Uri.https(
+          StringsAsset.ngrokUrl, StringsAsset.locationApi, {'q': '{http}'});
       final result = await http.post(url,
           headers: {'Content-Type': 'application/json'}, // Set the content type
           body: jsonEncode({
@@ -79,6 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
       restaurantPageViewModel.numberOfListOfRestaurants = listOfRestaurants.length;
       print("number");
       print(restaurantPageViewModel.numberOfListOfRestaurants);
+      List<String> stringList = listOfRestaurants.map((element) => element.toString()).toList();
+      restaurantPageViewModel.vendorIds = stringList;
 
       if (data['status-code'] != "200") {
         // Assuming the status code is 'status-code'
@@ -169,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
                     },
                     icon: const Icon(
-                      Icons.person_2_rounded,
+                      Icons.logout,
                       color: Colors.black,
                     )),
               )

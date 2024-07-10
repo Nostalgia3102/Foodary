@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:foodary/data/models/user_profile.dart';
 
 class Items{
-  Id vendorId;
+  Id? vendorId;
   String name;
   String description;
   int price;
@@ -12,9 +12,10 @@ class Items{
   Timestamp createdAt;
   Timestamp updatedAt;
   String itemsId;
+  int count;
 
   Items({
-    required this.vendorId,
+    this.vendorId,
     required this.name,
     required this.description,
     required this.price,
@@ -24,6 +25,7 @@ class Items{
     required this.createdAt,
     required this.updatedAt,
     required this.itemsId,
+    this.count = 0,
   });
 
   factory Items.fromMap(Map<String, dynamic> json) => Items(
@@ -37,10 +39,11 @@ class Items{
     createdAt: json["createdAt"],
     updatedAt: json["updatedAt"],
     itemsId: json["itemsId"],
+    count: json['count']
   );
 
   Map<String, dynamic> toMap() => {
-    "vendorId": vendorId.toMap(),
+    "vendorId": vendorId?.toMap(),
     "name": name,
     "description": description,
     "price": price,
@@ -50,5 +53,6 @@ class Items{
     "createdAt": createdAt,
     "updatedAt": updatedAt,
     "itemsId": itemsId,
+    "count": count
   };
 }

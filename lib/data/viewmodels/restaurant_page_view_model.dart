@@ -9,4 +9,10 @@ class RestaurantPageViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
+  List<String>? _vendorIds;
+  List<String>? get vendorIds => _vendorIds;
+  set vendorIds(List<String>? value){
+    _vendorIds = value;
+    notifyListeners();
+  }
 }

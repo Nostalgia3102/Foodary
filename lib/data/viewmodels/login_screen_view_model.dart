@@ -17,4 +17,11 @@ class LoginScreenViewModel extends ChangeNotifier{
     _password = value;
     notifyListeners();
   }
+
+  bool _eyeButton = false;
+  bool get eyeButton => _eyeButton;
+  set eyeButton(bool value){
+    _eyeButton = value;
+    notifyListeners();
+  }
 }

@@ -27,7 +27,7 @@ class _WelcomeScreenPageState extends State<WelcomeScreenPage> {
                 const SizedBox(height: 10),
                 (provider.currentPage == 2)
                     ? buildElevatedButton()
-                    : const SizedBox(height: 50),
+                    : const SizedBox(height: 48),
                 const SizedBox(height: 5),
               ],
             ),
@@ -53,7 +53,7 @@ class _WelcomeScreenPageState extends State<WelcomeScreenPage> {
           navigationService.pushReplacementNamed("/login_page");
         },
         child: const Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+          padding: EdgeInsets.fromLTRB(90, 0, 90, 0),
           child: Text(
             StringsAsset.getStarted,
             style: TextStyle(color: Colors.white),

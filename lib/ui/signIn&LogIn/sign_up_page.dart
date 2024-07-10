@@ -16,6 +16,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   String? name, email, password;
+  bool registerPressed = false;
 
   @override
   void initState() {
@@ -87,47 +88,47 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 StringsAsset.enterPassword,
                                 StringsAsset.passwordLabelText),
                           ),
-                          SizedBox(height: MediaQuery
-                              .of(context)
-                              .size
-                              .height * 0.02),
-                          SizedBox(
-                            height: 60,
-                            child: InternationalPhoneNumberInput(
-                              keyboardType: TextInputType.phone,
-                              autoFocusSearch: true,
-                              inputDecoration: InputDecoration(
-                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-                                  labelText: StringsAsset.phoneNumberLabelText,
-                                  fillColor: Colors.blue,
-                                  contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-                                  errorStyle: const TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12,
-                                    height: 0.3,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  alignLabelWithHint: true,
-                                  errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                      color: Colors.red,
-                                      width: 2,
-                                    ),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: const BorderSide(
-                                        color: Colors.redAccent,
-                                        width: 2,
-                                      ),
-                                      gapPadding: 0)),
-                              onInputChanged: (value) {
-                                provider.phoneNumber = value.phoneNumber;
-                              },
-                            ),
-                          ),
+                          // SizedBox(height: MediaQuery
+                          //     .of(context)
+                          //     .size
+                          //     .height * 0.02),
+                          // SizedBox(
+                          //   height: 60,
+                          //   child: InternationalPhoneNumberInput(
+                          //     keyboardType: TextInputType.phone,
+                          //     autoFocusSearch: true,
+                          //     inputDecoration: InputDecoration(
+                          //         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                          //         labelText: StringsAsset.phoneNumberLabelText,
+                          //         fillColor: Colors.blue,
+                          //         contentPadding:
+                          //         const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                          //         errorStyle: const TextStyle(
+                          //           color: Colors.red,
+                          //           fontSize: 12,
+                          //           height: 0.3,
+                          //           fontWeight: FontWeight.normal,
+                          //         ),
+                          //         alignLabelWithHint: true,
+                          //         errorBorder: OutlineInputBorder(
+                          //           borderRadius: BorderRadius.circular(12),
+                          //           borderSide: const BorderSide(
+                          //             color: Colors.red,
+                          //             width: 2,
+                          //           ),
+                          //         ),
+                          //         focusedErrorBorder: OutlineInputBorder(
+                          //             borderRadius: BorderRadius.circular(12),
+                          //             borderSide: const BorderSide(
+                          //               color: Colors.redAccent,
+                          //               width: 2,
+                          //             ),
+                          //             gapPadding: 0)),
+                          //     onInputChanged: (value) {
+                          //       provider.phoneNumber = value.phoneNumber;
+                          //     },
+                          //   ),
+                          // ),
                           SizedBox(height: MediaQuery
                               .of(context)
                               .size
@@ -203,7 +204,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           "Have an Account ?",
           style: TextStyle(fontWeight: FontWeight.w500, color: Colors.black54),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 5),
         GestureDetector(
           onTap: () {
             Navigator.pop(context);
@@ -313,6 +314,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 side: BorderSide(color: Colors.deepOrange)),
           )),
       onPressed: () async {
+        registerPressed = true;
         if (provider.signUpFormKey.currentState?.validate() ?? false) {
           provider.signUpFormKey.currentState?.save();
           bool result =
@@ -339,7 +341,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         padding: EdgeInsets.all(12),
         child: Text(
           "Register",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -351,7 +353,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
         keyboardType: (labelText == "Phone Number")
             ? TextInputType.phone
-            : TextInputType.text,
+            : (labelText == "Email") ?TextInputType.emailAddress : TextInputType.text,
 
         validator: (value) {
           if (value != null &&
@@ -377,6 +379,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
           return cautionText;
         },
+        obscureText: (labelText == "Password")
+            ? provider.eyeButton
+            ? false
+            : true
+            : false,
+        autovalidateMode: registerPressed ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
+
         decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             labelText: labelText,
@@ -397,6 +406,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 width: 2,
               ),
             ),
+            suffixIcon: (labelText == "Password")
+                ? provider.eyeButton
+                ? IconButton(
+              onPressed: () {
+                provider.eyeButton = !provider.eyeButton;
+                print(provider.eyeButton);
+              },
+              icon: const Icon(Icons.visibility),
+            )
+                : IconButton(
+              onPressed: () {
+                provider.eyeButton = !provider.eyeButton;
+                print(provider.eyeButton);
+              },
+              icon: const Icon(Icons.visibility_off),
+            )
+                : const SizedBox.shrink(),
             focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(

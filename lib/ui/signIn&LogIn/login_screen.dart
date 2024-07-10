@@ -5,7 +5,6 @@ import '../../data/viewmodels/login_screen_view_model.dart';
 import '../../utils/constants/validations.dart';
 import '../../utils/utilities.dart';
 
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -14,6 +13,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool loginPressed = false;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<LoginScreenViewModel>(
@@ -52,7 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   provider,
                                   StringsAsset.enterEmail,
                                   StringsAsset.emailLabelText)),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.03),
                           SizedBox(
                             height: 60,
                             child: buildTextFormField(
@@ -60,14 +63,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                 StringsAsset.enterPassword,
                                 StringsAsset.passwordLabelText),
                           ),
-                          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.01),
                           Align(
                             alignment: Alignment.topRight,
                             child: GestureDetector(
-                              onTap: (){},
-                              child: const Text("Forgot your password ?", style:TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black54),),
+                              onTap: () {},
+                              child: const Text(
+                                "Forgot your password ?",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black54),
+                              ),
                             ),
                           ),
                         ],
@@ -132,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
           "Not a member ?",
           style: TextStyle(fontWeight: FontWeight.w500, color: Colors.black54),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 5),
         GestureDetector(
           onTap: () {
             navigationService.pushNamed("/sign_up");
@@ -157,14 +165,15 @@ class _LoginScreenState extends State<LoginScreen> {
               'assets/images/fb.png',
               width: MediaQuery.of(context).size.width * 0.08,
             ),
-            onPressed: () async{
-              try{
+            onPressed: () async {
+              try {
                 bool res = await authService.loginWithFacebook();
-                if(res){
+                if (res) {
                   navigationService.pushReplacementNamed("/home_page");
-                }else{
+                } else {
                   final snackBar = SnackBar(
-                    content: const Text('User does not exists, Please register - FB'),
+                    content: const Text(
+                        'User does not exists, Please register - FB'),
                     duration: const Duration(seconds: 2),
                     action: SnackBarAction(
                       label: 'Close',
@@ -175,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
-              }catch(e){
+              } catch (e) {
                 print(e);
               }
             }),
@@ -185,16 +194,16 @@ class _LoginScreenState extends State<LoginScreen> {
               'assets/images/gogl.png',
               width: MediaQuery.of(context).size.width * 0.14,
             ),
-            onPressed: () async{
-              try{
-                bool result =
-                await authService.logInWithGoogle();
+            onPressed: () async {
+              try {
+                bool result = await authService.logInWithGoogle();
                 print(result);
                 if (result) {
                   navigationService.pushReplacementNamed("/home_page");
                 } else {
                   final snackBar = SnackBar(
-                    content: const Text('User does not exists, Please register - GM'),
+                    content: const Text(
+                        'User does not exists, Please register - GM'),
                     duration: const Duration(seconds: 2),
                     action: SnackBarAction(
                       label: 'Close',
@@ -205,7 +214,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   );
                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 }
-              }catch(e){
+              } catch (e) {
                 debugPrint(e.toString());
               }
             }),
@@ -225,6 +234,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 side: BorderSide(color: Colors.deepOrange)),
           )),
       onPressed: () async {
+        loginPressed = true;
         if (provider.loginFormKey.currentState?.validate() ?? false) {
           provider.loginFormKey.currentState?.save();
           bool result =
@@ -251,7 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: EdgeInsets.all(12),
         child: Text(
           "Login",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
     );
@@ -275,6 +285,15 @@ class _LoginScreenState extends State<LoginScreen> {
           }
           return cautionText;
         },
+        keyboardType: (labelText == "Email") ? TextInputType.emailAddress : TextInputType.text,
+        obscureText: (labelText == "Password")
+            ? provider.eyeButton
+                ? false
+                : true
+            : false,
+        autovalidateMode: loginPressed
+            ? AutovalidateMode.onUserInteraction
+            : AutovalidateMode.disabled,
         decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             labelText: labelText,
@@ -295,6 +314,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: 2,
               ),
             ),
+            suffixIcon: (labelText == "Password")
+                ? provider.eyeButton
+                    ? IconButton(
+                        onPressed: () {
+                          provider.eyeButton = !provider.eyeButton;
+                          print(provider.eyeButton);
+                        },
+                        icon: const Icon(Icons.visibility),
+                      )
+                    : IconButton(
+                        onPressed: () {
+                          provider.eyeButton = !provider.eyeButton;
+                          print(provider.eyeButton);
+                        },
+                        icon: const Icon(Icons.visibility_off),
+                      )
+                : const SizedBox.shrink(),
             focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(

@@ -31,4 +31,11 @@ class SignUpScreenViewModel extends ChangeNotifier{
     notifyListeners();
   }
 
+  bool _eyeButton = false;
+  bool get eyeButton => _eyeButton;
+  set eyeButton(bool value){
+    _eyeButton = value;
+    notifyListeners();
+  }
+
 }

@@ -13,4 +13,8 @@ class StringsAsset {
   static const String nameLabelText = "Full name";
   static const String enterPhoneNumber = "Enter a valid phone number";
   static const String phoneNumberLabelText = "Phone Number";
+
+  ///Network & service related:
+  static const String ngrokUrl = "dbcb-14-195-60-42.ngrok-free.app";
+  static const String locationApi = "/api/sending_location";
 }
