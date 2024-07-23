@@ -15,6 +15,8 @@ class StringsAsset {
   static const String phoneNumberLabelText = "Phone Number";
 
   ///Network & service related:
-  static const String ngrokUrl = "dbcb-14-195-60-42.ngrok-free.app";
+  static const String ngrokUrl = "ef17-14-195-60-42.ngrok-free.app";
   static const String locationApi = "/api/sending_location";
+
+  static const String kWebRecaptchaSiteKey = "6Ld4qhIqAAAAAA_r5N7SER2V1xGBc5gbd7Qmp8RW";
 }

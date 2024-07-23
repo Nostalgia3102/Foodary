@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:foodary/data/models/items.dart';
 import 'package:foodary/data/viewmodels/restaurant_personal_page_view_model.dart';
+import 'package:foodary/services/method_channels.dart';
 import 'package:provider/provider.dart';
 
-import '../data/models/pairs.dart';
 import '../utils/constants/colors.dart';
 
 class RestaurantPersonalPage extends StatefulWidget {
@@ -80,9 +80,13 @@ class _RestaurantPersonalPageState extends State<RestaurantPersonalPage> {
           appBar: AppBar(
             actions: [
               IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.favorite_border)),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.send)),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))
+                  onPressed: () {
+                    provider.restaurantLiked = !provider.restaurantLiked;
+                  }, icon: Icon((!provider.restaurantLiked)? Icons.favorite_border : Icons.favorite, color: Colors.red,)),
+              IconButton(onPressed: () {
+                MethodChannels.sendMessage("Your friend has recommended ${arguments['name']} restaurant, Download Foodary Now!");
+              }, icon: const Icon(Icons.send, color: Colors.deepOrange)),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert, color: Colors.deepOrange,))
             ],
           ),
           body: SingleChildScrollView(
@@ -151,59 +155,62 @@ class _RestaurantPersonalPageState extends State<RestaurantPersonalPage> {
                       itemCount: provider.listOfItems.length,
                       itemBuilder: (context, index) {
                         // debugPrint("The value in count is ${provider.listOfItems[index].count}");
-                        return ListTile(
-                          leading: Image.network(
-                            provider.listOfItems[index].imageUrl,
-                            width: 40,
-                            height: 40,
-                          ),
-                          title: Text(
-                            provider.listOfItems[index].name,
-                            maxLines: 1,
-                          ),
-                          subtitle: Text(
-                            provider.listOfItems[index].description.toString(),
-                            maxLines: 1,
-                          ),
-                          trailing: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                "₹ ${provider.listOfItems[index].price.toString()}",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 10,
+                        return Card(
+                          elevation: 1,
+                          child: ListTile(
+                            leading: Image.network(
+                              provider.listOfItems[index].imageUrl,
+                              width: 50,
+                              height: 50,
+                            ),
+                            title: Text(
+                              provider.listOfItems[index].name,
+                              maxLines: 1,
+                            ),
+                            subtitle: Text(
+                              provider.listOfItems[index].description.toString(),
+                              maxLines: 2,
+                            ),
+                            trailing: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "₹ ${provider.listOfItems[index].price.toString()}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                  height: 20,
-                                  child: (provider.listOfItems[index].count > 0)
-                                      ? buildRowPlusMinus(provider, index)
-                                      : GestureDetector(
-                                          onTap: () {
-                                            provider.listOfItems[index].count++;
-                                            provider.numberOfItemsInCart++;
-                                            if (!provider.listOfIds.contains(
-                                                provider.listOfItems[index]
-                                                    .itemsId)) {
-                                              provider.listOfIds.add(provider
-                                                  .listOfItems[index].itemsId);
-                                            }
-                                            provider.setState();
-                                            debugPrint(
-                                                "The value in count is (add)${provider.listOfItems[index].count}");
-                                          },
-                                          child: (provider.listOfItems[index]
-                                                      .count ==
-                                                  0)
-                                              ? const Text("Add + ",
-                                                  style: TextStyle(
-                                                      fontSize: 10,
-                                                      color: Colors.deepOrange))
-                                              : buildRowPlusMinus(
-                                                  provider, index),
-                                        ))
-                            ],
+                                SizedBox(
+                                    height: 32,
+                                    child: (provider.listOfItems[index].count > 0)
+                                        ? buildRowPlusMinus(provider, index)
+                                        : GestureDetector(
+                                            onTap: () {
+                                              provider.listOfItems[index].count++;
+                                              provider.numberOfItemsInCart++;
+                                              if (!provider.listOfIds.contains(
+                                                  provider.listOfItems[index]
+                                                      .itemsId)) {
+                                                provider.listOfIds.add(provider
+                                                    .listOfItems[index].itemsId);
+                                              }
+                                              provider.setState();
+                                              debugPrint(
+                                                  "The value in count is (add)${provider.listOfItems[index].count}");
+                                            },
+                                            child: (provider.listOfItems[index]
+                                                        .count ==
+                                                    0)
+                                                ? const Text("Add + ",
+                                                    style: TextStyle(
+                                                        fontSize: 16,
+                                                        color: Colors.deepOrange))
+                                                : buildRowPlusMinus(
+                                                    provider, index),
+                                          ))
+                              ],
+                            ),
                           ),
                         );
                       },
@@ -273,52 +280,57 @@ class _RestaurantPersonalPageState extends State<RestaurantPersonalPage> {
               );
   }
 
-  Row buildRowPlusMinus(RestaurantPersonalPageViewModel provider, int index) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        IconButton(
-            onPressed: () {
-              if (provider.listOfItems[index].count > 0) {
-                if (provider.listOfItems[index].count == 1) {
-                  ///delete this item
-                  provider.listOfIds.remove(provider.listOfItems[index].itemsId);
-                }
-                provider.listOfItems[index].count--;
-                provider.numberOfItemsInCart--;
+  Card buildRowPlusMinus(RestaurantPersonalPageViewModel provider, int index) {
+    return Card(
+      color: const Color.fromRGBO(217, 74, 17, 0.8),
+      elevation: 2,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          IconButton(
+            padding: EdgeInsets.zero,
+              onPressed: () {
+                if (provider.listOfItems[index].count > 0) {
+                  if (provider.listOfItems[index].count == 1) {
+                    ///delete this item
+                    provider.listOfIds.remove(provider.listOfItems[index].itemsId);
+                  }
+                  provider.listOfItems[index].count--;
+                  provider.numberOfItemsInCart--;
 
+                  provider.setState();
+                  debugPrint(
+                      "The value in count is -- ${provider.listOfItems[index].count}");
+                }
+              },
+              icon: const Icon(
+                Icons.remove,
+                size: 20,
+                color: Colors.white,
+              )),
+          Text(provider.listOfItems[index].count.toString(), style: const TextStyle(fontSize: 16, color: AppColor.white, fontWeight: FontWeight.bold),),
+          IconButton(
+              padding: EdgeInsets.zero,
+              onPressed: () {
+                print("My Index Number is $index");
+                provider.listOfItems[index].count++;
+                provider.numberOfItemsInCart++;
                 provider.setState();
                 debugPrint(
-                    "The value in count is -- ${provider.listOfItems[index].count}");
-              }
-            },
-            icon: const Icon(
-              Icons.remove,
-              size: 10,
-              color: Colors.black,
-            )),
-        Text(provider.listOfItems[index].count.toString()),
-        IconButton(
-            onPressed: () {
-              print("My Index Number is $index");
-
-              provider.listOfItems[index].count++;
-              provider.numberOfItemsInCart++;
-
-              provider.setState();
-              debugPrint(
-                  "The value in count is ++ ${provider.listOfItems[index].count}");
-
-              provider.setState();
-              debugPrint(
-                  "The value in count is ++ ${provider.listOfItems[index].count}");
-            },
-            icon: const Icon(
-              Icons.add,
-              size: 10,
-              color: Colors.black,
-            ))
-      ],
+                    "The value in count is ++ ${provider.listOfItems[index].count}");
+                provider.setState();
+                debugPrint(
+                    "The value in count is ++ ${provider.listOfItems[index].count}");
+              },
+              icon: const Icon(
+                Icons.add,
+                size: 20,
+                color: Colors.white,
+              ))
+        ],
+      ),
     );
   }
 }

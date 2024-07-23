@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:foodary/data/viewmodels/restaurant_page_view_model.dart';
+import 'package:foodary/services/navigation_service.dart';
+import 'package:foodary/ui/profile_page.dart';
 import 'package:foodary/utils/constants/strings.dart';
 import 'package:http/http.dart' as http;
 
@@ -153,10 +155,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             actions: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+                  },
                   icon: const Icon(
                     size: 20,
-                    Icons.shopping_cart_outlined,
+                    Icons.person_2_rounded,
                     color: Colors.black,
                   )),
               Padding(

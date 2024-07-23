@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 class SignUpScreenViewModel extends ChangeNotifier{
   final GlobalKey<FormState> signUpFormKey = GlobalKey();
 
+  bool _registerPressed = false;
+  bool get registerPressed => _registerPressed;
+  set registerPressed(bool value){
+    _registerPressed = value;
+    notifyListeners();
+  }
+
+
   String? _name;
   String? get name => _name;
   set name(String? value) {
@@ -36,6 +44,14 @@ class SignUpScreenViewModel extends ChangeNotifier{
   set eyeButton(bool value){
     _eyeButton = value;
     notifyListeners();
+  }
+
+  void setRegisterPressed(SignUpScreenViewModel provider,bool value) {
+    provider.registerPressed = value;
+  }
+
+  void toggleEyeButton(SignUpScreenViewModel provider,bool value) {
+    provider.eyeButton = value;
   }
 
 }

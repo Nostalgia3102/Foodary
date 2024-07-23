@@ -11,6 +11,13 @@ class RestaurantPersonalPageViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _restaurantLiked = false;
+  bool get restaurantLiked => _restaurantLiked;
+  set restaurantLiked(bool value) {
+    _restaurantLiked = value;
+    notifyListeners();
+  }
+
 
   int _numberOfItemsInCart = 0;
   int get numberOfItemsInCart => _numberOfItemsInCart;

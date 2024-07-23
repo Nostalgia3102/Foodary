@@ -41,3 +41,8 @@ class _MyAppState extends State<MyApp> {
 //Installed Shorebird for no update code changes
 //using Sliver App Bar for dynamic App bar
 //using Shimmer for the loading effect
+//How to access internet without any package ?
+// Android & iOS -> Http Client
+// Web -> Http Request
+// and in flutter : http package does this task for us.
+//In Native Android -> with library : Volley , Retrofit | without library : HTTPUrl Connectivity

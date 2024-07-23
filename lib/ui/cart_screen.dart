@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../data/models/items.dart';
 import '../data/viewmodels/restaurant_personal_page_view_model.dart';
-import '../services/upi_payments.dart';
+import '../services/method_channels.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -149,7 +149,7 @@ class CartScreen extends StatelessWidget {
                 side: BorderSide(color: Colors.deepOrange)),
           )),
       onPressed: () async {
-        UpiPayment.payUsingUpi(amount.toString(), '6283013257@ptsbi', 'Foodary', 'Placing order id - future');
+        MethodChannels.payUsingUpi(amount.toString(), '6283013257@ptsbi', 'Foodary', 'Placing order id - future');
       },
       child: Padding(
         padding: const EdgeInsets.all(12),

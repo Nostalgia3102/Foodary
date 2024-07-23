@@ -7,21 +7,8 @@ import '../../utils/constants/validations.dart';
 import '../../utils/utilities.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
-
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
-  String? name, email, password;
-  bool registerPressed = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,22 +31,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
               padding: const EdgeInsets.all(10.0),
               child: Column(
                 children: [
-                  SizedBox(height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.025),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.025),
                   buildSignUpTitle(),
                   buildSignUpSubTitle(),
-                  SizedBox(height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.04),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                   Form(
                     key: provider.signUpFormKey,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: Column(
-                        // crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           SizedBox(
                               height: 60.0,
@@ -67,20 +47,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   provider,
                                   StringsAsset.enterName,
                                   StringsAsset.nameLabelText)),
-                          SizedBox(height: MediaQuery
-                              .of(context)
-                              .size
-                              .height * 0.02),
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                           SizedBox(
                               height: 60.0,
                               child: buildTextFormField(
                                   provider,
                                   StringsAsset.enterEmail,
                                   StringsAsset.emailLabelText)),
-                          SizedBox(height: MediaQuery
-                              .of(context)
-                              .size
-                              .height * 0.02),
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                           SizedBox(
                             height: 60,
                             child: buildTextFormField(
@@ -88,10 +62,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 StringsAsset.enterPassword,
                                 StringsAsset.passwordLabelText),
                           ),
-                          // SizedBox(height: MediaQuery
-                          //     .of(context)
-                          //     .size
-                          //     .height * 0.02),
+                          // SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                           // SizedBox(
                           //   height: 60,
                           //   child: InternationalPhoneNumberInput(
@@ -129,18 +100,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           //     },
                           //   ),
                           // ),
-                          SizedBox(height: MediaQuery
-                              .of(context)
-                              .size
-                              .height * 0.025),
+                          SizedBox(height: MediaQuery.of(context).size.height * 0.025),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.0),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.0),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                     child: SizedBox(
@@ -148,10 +113,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: buildElevatedSignUpButton(provider, context),
                     ),
                   ),
-                  SizedBox(height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.045),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.045),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -176,15 +138,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.025),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.025),
                   buildRowOtherSignUpOptions(context, provider),
                   Expanded(
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8, 8, 8, 14),
-                        child: buildRowFooterText(),
+                        child: buildRowFooterText(context),
                       ))
                 ],
               ),
@@ -195,7 +154,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Row buildRowFooterText() {
+  Row buildRowFooterText(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -224,17 +183,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        SizedBox(width: MediaQuery
-            .of(context)
-            .size
-            .height * 0.05),
+        SizedBox(width: MediaQuery.of(context).size.height * 0.05),
         IconButton(
             icon: Image.asset(
               'assets/images/fb.png',
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.08,
+              width: MediaQuery.of(context).size.width * 0.08,
             ),
             onPressed: () async {
               try {
@@ -244,7 +197,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 } else {
                   final snackBar = SnackBar(
                     content: const Text(
-                        'User does not exists, Please register - FB'),
+                        'User does not exist, Please register - FB'),
                     duration: const Duration(seconds: 2),
                     action: SnackBarAction(
                       label: 'Close',
@@ -259,17 +212,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 print(e);
               }
             }),
-        SizedBox(width: MediaQuery
-            .of(context)
-            .size
-            .height * 0.01),
+        SizedBox(width: MediaQuery.of(context).size.height * 0.01),
         IconButton(
             icon: Image.asset(
               'assets/images/gogl.png',
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.14,
+              width: MediaQuery.of(context).size.width * 0.14,
             ),
             onPressed: () async {
               try {
@@ -295,10 +242,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 debugPrint(e.toString());
               }
             }),
-        SizedBox(width: MediaQuery
-            .of(context)
-            .size
-            .height * 0.05),
+        SizedBox(width: MediaQuery.of(context).size.height * 0.05),
       ],
     );
   }
@@ -314,7 +258,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 side: BorderSide(color: Colors.deepOrange)),
           )),
       onPressed: () async {
-        registerPressed = true;
+        provider.setRegisterPressed(provider, true);
         if (provider.signUpFormKey.currentState?.validate() ?? false) {
           provider.signUpFormKey.currentState?.save();
           bool result =
@@ -350,15 +294,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextFormField buildTextFormField(SignUpScreenViewModel provider,
       String cautionText, String labelText) {
     return TextFormField(
-
         keyboardType: (labelText == "Phone Number")
             ? TextInputType.phone
-            : (labelText == "Email") ?TextInputType.emailAddress : TextInputType.text,
+            : (labelText == "Email") ? TextInputType.emailAddress : TextInputType.text,
 
         validator: (value) {
+          print("INSIDE THE CHECKER");
           if (value != null &&
-              labelText == "Full Name" &&
-              EMAIL_VALIDATION_REGEX.hasMatch(value)) {
+              labelText == "Full name" && NAME_VALIDATION_REGEX.hasMatch(value)) {
+            print("INSIDE THE FULL NAME FIELD");
             provider.name = value;
             return null;
           }
@@ -366,6 +310,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           if (value != null &&
               labelText == "Email" &&
               EMAIL_VALIDATION_REGEX.hasMatch(value)) {
+            print("INSIDE THE EMAIL FIELD");
             provider.email = value;
             return null;
           }
@@ -373,6 +318,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           if (value != null &&
               labelText == "Password" &&
               PASSWORD_VALIDATION_REGEX.hasMatch(value)) {
+            print("INSIDE THE PASSWORD FIELD");
             provider.password = value;
             return null;
           }
@@ -384,7 +330,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ? false
             : true
             : false,
-        autovalidateMode: registerPressed ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
+        autovalidateMode: provider.registerPressed ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
 
         decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
@@ -407,20 +353,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             suffixIcon: (labelText == "Password")
-                ? provider.eyeButton
                 ? IconButton(
               onPressed: () {
-                provider.eyeButton = !provider.eyeButton;
-                print(provider.eyeButton);
+                provider.toggleEyeButton(provider, !provider.eyeButton);
               },
-              icon: const Icon(Icons.visibility),
-            )
-                : IconButton(
-              onPressed: () {
-                provider.eyeButton = !provider.eyeButton;
-                print(provider.eyeButton);
-              },
-              icon: const Icon(Icons.visibility_off),
+              icon: provider.eyeButton
+                  ? const Icon(Icons.visibility)
+                  : const Icon(Icons.visibility_off),
             )
                 : const SizedBox.shrink(),
             focusedErrorBorder: OutlineInputBorder(

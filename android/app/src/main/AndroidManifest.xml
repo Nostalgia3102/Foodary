@@ -3,7 +3,10 @@
     <application
         android:label="Foodary"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
+        android:enableOnBackInvokedCallback="true">
+
 
         <!-- Facebook SDK meta-data -->
         <meta-data

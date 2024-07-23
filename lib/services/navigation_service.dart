@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodary/ui/cart_screen.dart';
+import 'package:foodary/ui/profile_page.dart';
 import 'package:foodary/ui/restaurant_personal_page.dart';
 import 'package:foodary/ui/signIn&LogIn/sign_up_page.dart';
 
@@ -13,6 +14,7 @@ class NavigationService{
   late GlobalKey<NavigatorState> _navigatorKey;
 
   final Map<String, Widget Function(BuildContext)> _routes = {
+    "/profile_screen" : (context) => const ProfilePage(),
     "/cart_screen": (context) => const CartScreen(),
     "/restaurant_personal_page": (context) => const RestaurantPersonalPage(),
     "/restaurants_page" : (context) => const RestaurantPage(),
